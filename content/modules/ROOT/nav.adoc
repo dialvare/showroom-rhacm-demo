@@ -1,6 +1,4 @@
 * xref:index.adoc[Introduction to the RHACM Demo]
-* xref:prerequisites.adoc[Prerequisites]
-
 
 .1. Cluster Lifecycle 
 * xref:clc-intro-cluster-lifecycle.adoc[Introduction to Cluster Lifecycle]
