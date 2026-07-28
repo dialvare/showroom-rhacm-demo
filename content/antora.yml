@@ -1,6 +1,6 @@
 name: modules
-title: Showroom Collection
-version: ~
+title: Advanced Cluster Management for Kubernetes Demo
+version: master
 nav:
 - modules/ROOT/nav.adoc
 

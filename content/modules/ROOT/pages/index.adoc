@@ -5,7 +5,6 @@
 [[introduction]]
 == Introduction
 
-
 https://www.redhat.com/en/technologies/management/advanced-cluster-management[Red Hat Advanced Cluster Management] (RHACM) is Red Hat's enterprise software solution that allows IT teams to centrally manage, monitor, and scale fleets of Kubernetes and OpenShift clusters across data centers, cloud providers (like AWS, Azure, GCP), and edge environments from a single console. 
 This demo covers the five major use cases for Red Hat Advanced Cluster Management for Kubernetes: multicluster lifecycle, policy-driven governance, advanced application lifecycle, multicluster observability, and business continuity. 
 
