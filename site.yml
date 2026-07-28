@@ -1,13 +1,12 @@
 ---
 site:
   title: Red Hat Advanced Cluster Management Demo
-  url: https://github.com/rhpds/showroom_template_nookbag
   start_page: modules::index.adoc
 
 content:
   sources:
-    - url: .
-      start_path: content
+  - url: .
+    start_path: content
 
 ui:
   bundle:
@@ -16,12 +15,12 @@ ui:
 
 antora:
   extensions:
-    - require: '@sntke/antora-mermaid-extension'
-      mermaid_library_url: https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs
-      script_stem: header-scripts
-      mermaid_initialize_options:
-        start_on_load: true
-    - require: '@andrew-jones/antora-tabs-extension'
+  - require: '@sntke/antora-mermaid-extension'
+    mermaid_library_url: https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs
+    script_stem: header-scripts
+    mermaid_initialize_options:
+      start_on_load: true
+  - require: '@andrew-jones/antora-tabs-extension'
 
 output:
   dir: ./www
