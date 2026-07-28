@@ -17,13 +17,59 @@ Others will require commands via the CLI.
 Some may be doable in both ways. 
 The demo steps will provided what's best suited for each case, and that means for each step/section, users might either see a embedded terminal tab, or an embedded OpenShift console page.
 
-== Where to Start
+[[what-youll-learn]]
+== What You'll Learn
 
-After reading the introduction page carefully, make sure you understood the demo environment features, and please proceed to the next section below: *Prerequisites 👇*.
+After completing this lab, you will have gained comprehensive, hands-on experience with Red Hat Advanced Cluster Management (RHACM) across several key use cases.
 
-IMPORTANT: Please make sure that you read all of the information before starting the demo. 
+* **Environment Preparation:** You will learn how to provision, configure, and access the RHACM Hub cluster using the Red Hat Demo Platform (RHDP).
+* **Cluster Lifecycle Management:** You will discover how to create, import, and upgrade OpenShift clusters in a multi-cloud environment using AWS. This includes deploying standard Standalone clusters, resource-efficient Single Node OpenShift (SNO) clusters, and Hosted Control Plane clusters.
+* **Application Lifecycle Management via GitOps:** You will learn how to install Argo CD and use it to manage multi-cluster applications. The lab covers utilizing a GitOps approach to distribute applications using a push model from a centralized cluster to remote target clusters.
+* **Governance (GRC):** You will learn how to enforce security policies and ensure compliance across your entire fleet of clusters by creating and deploying policies within ACM, including the use of the Policy Generator.
+* **End-to-End Observability:** You will configure centralized visibility to monitor cluster health and perform quick root cause analysis. This includes setting up backend storage (S3 buckets) and integrating Grafana into ACM for a complete observability overview.
+* **Fleet Virtualization:** You will learn how to manage virtualization workloads from a single pane of glass using RHACM. This includes utilizing a centralized multi-cluster tree-view for enhanced visibility, creating new virtual machines across your clusters, and performing cross-cluster live migrations to simplify operations and reduce manual context switching.
 
-If you have any questions or face any issues, please talk to your facilitator or get in touch with the RHACM team: mail-to:acm-contact@redhat.com[acm-contact@redhat.com]
+[[prerequisites]]
+== Prerequisites
+
+Before beginning this lab, you should have:
+
+* Solid OpenShift administration experience
+* Familiarity with multi-cluster concepts
+
+We need to apply a configuration change to our cluster to increase the number of allowed pods, this is just to increase capacity for further execises down the line.
+
+Your RHACS Console is also available in the right panel. In case you want to open it in another window it is here: {acs_route}[window=blank]
+
+Administrator login credentials:
+
+[cols="1,1"]
+|===
+| *RHACS Console Username:* | {acs_portal_username}
+| *RHACS Console Password:* | {acs_portal_password}
+|===
+
+[source,yaml]
+----
+apiVersion: machineconfiguration.openshift.io/v1
+kind: KubeletConfig
+metadata:
+  name: set-max-pods 
+spec:
+  machineConfigPoolSelector:
+    matchLabels:
+      pools.operator.machineconfiguration.openshift.io/master: "" 
+  kubeletConfig:
+    podsPerCore: 20 
+    maxPods: 500
+----
+
+Secondly, to proceed successfully, make sure you have the following artifacts:
+
+- A SSH keys (public and private).
+- An OpenShift pull-secret.
+
+NOTE: if you don't have these handy, don't sweat -- Either the demo instructions will help you get one or your facilitator can get you one too.
 
 == Related/Helpful Links
 
