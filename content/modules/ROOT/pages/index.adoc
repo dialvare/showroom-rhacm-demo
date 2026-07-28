@@ -1,5 +1,10 @@
-= Introduction to RHACM Demo - Welcome 👋
-:navtitle: Introduction to RHACM Demo
+[[labname]]
+
+= {lab_name}
+
+[[introduction]]
+== Introduction
+
 
 https://www.redhat.com/en/technologies/management/advanced-cluster-management[Red Hat Advanced Cluster Management] (RHACM) is Red Hat's enterprise software solution that allows IT teams to centrally manage, monitor, and scale fleets of Kubernetes and OpenShift clusters across data centers, cloud providers (like AWS, Azure, GCP), and edge environments from a single console. 
 This demo covers the five major use cases for Red Hat Advanced Cluster Management for Kubernetes: multicluster lifecycle, policy-driven governance, advanced application lifecycle, multicluster observability, and business continuity. 
@@ -71,6 +76,7 @@ Secondly, to proceed successfully, make sure you have the following artifacts:
 
 NOTE: if you don't have these handy, don't sweat -- Either the demo instructions will help you get one or your facilitator can get you one too.
 
+[[Related-links]]
 == Related/Helpful Links
 
 * https://docs.redhat.com/en/documentation/red_hat_advanced_cluster_management_for_kubernetes/2.17[RHACM 2.17 Docs] -- Red Hat Advanced Cluster Management 2.17 full documentation (latest)
@@ -78,6 +84,7 @@ NOTE: if you don't have these handy, don't sweat -- Either the demo instructions
 * https://www.youtube.com/playlist?list=PLaR6Rq6Z4IqcKOKT4c0uGkBt3YSRQ9S5v[RHACM YouTube Playlist] -- Official RHACM Youtube playlist
 * more to come soon...
 
+[[Foundational-Concepts]]
 == Foundational Concepts/Glossary
 
 * `Hub Cluster`: Also sometimes called the management cluster, is the OpenShift cluster in which RHACM is installed. The Hub cluster manages all managed clusters.

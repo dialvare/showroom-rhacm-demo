@@ -1,4 +1,9 @@
 * xref:index.adoc[Introduction to the RHACM Demo]
+** xref:index.adoc#introduction[Introduction]
+** xref:index.adoc#what-youll-learn[What You Will Learn]
+** xref:index.adoc#prerequisites[Prerequisites]
+** xref:index.adoc#Related-links[Related Links]
+** xref:index.adoc#Foundational-Concepts[Foundational Concepts]
 
 .1. Cluster Lifecycle 
 * xref:clc-intro-cluster-lifecycle.adoc[Introduction to Cluster Lifecycle]
