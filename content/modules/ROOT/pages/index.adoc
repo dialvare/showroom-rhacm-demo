@@ -43,17 +43,19 @@ Before beginning this lab, you should have:
 
 We need to apply a configuration change to our cluster to increase the number of allowed pods, this is just to increase capacity for further execises down the line.
 
-Your RHACS Console is also available in the right panel. In case you want to open it in another window it is here: {acs_route}[window=blank]
+The Red Hat Advanced Cluster Management for Kubernetes (RHACM) Console is now integrated with OpenShift Console. To access it, select *Fleet Management* from the dropdown menu on the left once you log in.
+
+Switch to the *OpenShift Console* tab in the right panel. In case you want to open it in another window it is here: {openshift_cluster_console_url}[window=blank]
+
+NOTE: ctrl + click on the URL to open URLs in a new tab.
 
 Administrator login credentials:
 
 [cols="1,1"]
 |===
-| *RHACS Console Username:* | {acs_portal_username}
-| *RHACS Console Password:* | {acs_portal_password}
+| *Username:* | {openshift_cluster_admin_username}
+| *Password:* | {openshift_cluster_admin_password}
 |===
-
-[source,yaml]
 ----
 apiVersion: machineconfiguration.openshift.io/v1
 kind: KubeletConfig
