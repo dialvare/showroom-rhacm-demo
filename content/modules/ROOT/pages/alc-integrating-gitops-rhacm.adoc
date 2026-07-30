@@ -23,7 +23,7 @@ By default, all users from the `cluster-admins` group are also Argo admins. So w
 
 In the bastion host, run:
 
-[source,bash]
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 oc adm groups new cluster-admins admin
 ----

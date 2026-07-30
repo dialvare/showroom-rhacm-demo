@@ -22,7 +22,7 @@ A little setup.
 
 In the bastion machine, run:
 
-[source,bash]
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 git clone https://github.com/levenhagen/rhdp-rhacm-demo
 cd rhdp-rhacm-demo/acm-policies/acm-observ/
@@ -43,7 +43,8 @@ We will use the policy generator to enable the MultiCluster Observability compon
 
 * Access the bastion host.
 * Verify your AWS connection is set up:  
-[source,bash]
+
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 aws configure
 
@@ -54,7 +55,8 @@ Default output format [None]:
 ----
 
 Then run the following command to create the S3 bucket: 
-[source,bash]
+
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 aws s3 mb s3://grafana-$GUID
 ----
@@ -65,7 +67,7 @@ IMPORTANT: *Please take note of the bucket name.*
 
 In the bastion machine, run:
 
-[source,bash]
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 oc new-project acm-policies
 
@@ -107,7 +109,7 @@ To enable Observability in RHACM, we need a couple of things:
 As part of the lab, we already provided all the YAMLs/Kubernetes resources needed to enable MultiCluster Observability in RHACM: The namespace, the secret/credentials and the MultiClusterObservability CR definition.
 Let's take a look at main resource - The MultiClusterObservability CR:
 
-[source,yaml]
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 apiVersion: observability.open-cluster-management.io/v1beta2
 metadata:
@@ -123,7 +125,7 @@ spec:
 
 Or if you prefer, you can see it yourself in the bastion host:
 
-[source,bash]
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 cd ~/rhdp-rhacm-demo/acm-policies/acm-observ
 cat multiclusterobservability.yaml
@@ -133,7 +135,7 @@ NOTE: This is a simple and default MultiClusterObservability CR. There are multi
 
 On other hand, another important resource is the `thanos-secret.yaml` file. It uses the very powerful functionality called templatized variables, so the credentials are not directly exposed, and can be stored in Git. RHACM Policy controllers will replace those variables with the actual secrets at runtime.
 
-[source,bash]
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 [...]
 stringData:
@@ -153,14 +155,14 @@ Now, with prerequisites ready, we'll feed Policy Generator with this information
 
 Create an empty kustomize file by running the following command.
 
-[source,bash]
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 kustomize create
 ----
 
 This should have created a file called `kustomization.yaml`. Edit the file, so it looks like this:
 
-[source,bash]
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
@@ -176,7 +178,7 @@ As we’re creating a new namespace, just like in the previous step, we need to 
 
 NOTE: the ManagedClusterSetBinding must be named the same as the clusterSet it is referencing.
 
-[source,bash]
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 cat > managedclustersetbinding.yaml << EOF
 apiVersion: cluster.open-cluster-management.io/v1beta2
@@ -193,7 +195,7 @@ Now, the main step: let’s create the *generator.yaml* file, that’s also refe
 
 Create the “generator.yaml” file to configure how the policy will be generated.
 
-[source,bash]
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 cat > generator.yaml << EOF
 apiVersion: policy.open-cluster-management.io/v1
@@ -243,7 +245,7 @@ With that, we should be all good to go! 👍
 Before applying the policy to the cluster we can test it locally to ensure the Policy Generator is configured correctly.
 Run the following command to execute the Policy Generator and output the generated policy.
 
-[source,bash]
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 kustomize build --enable-alpha-plugins ./
 ----
@@ -257,7 +259,7 @@ Remember, at the beggining, as part of the prerequisites for this section, we in
 
 To validate the Policy using the PolicyTools let's run:
 
-[source,bash]
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 kustomize build --enable-alpha-plugins "./" | \
 yq 'select(.kind == "Policy" and .metadata.name == "acm-observability")' | \
@@ -270,7 +272,7 @@ Note the value of the thanos-object-storage Secret, now the value should return 
 
 Now, if everything went successfully as expected, finally, run the following command to create the policy on the cluster.  We understand a lot of policy development occurs in a developer setup including IDEs and terminals, but in a production setting these files would be stored in a git repository and applied as shown earlier using a gitops application via the RHACM UI.
 
-[source,bash]
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 kustomize build --enable-alpha-plugins ./ | oc apply -f -
 ----

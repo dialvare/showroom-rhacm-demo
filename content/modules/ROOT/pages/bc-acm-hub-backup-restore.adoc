@@ -35,7 +35,7 @@ To backup the primary hub cluster data, you do not need an `active-passive` conf
 
 One more time, we will be using a AWS S3 Storage bucket for storing the hub backup data.
 
-[source,bash]
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 aws s3api create-bucket --bucket acm-backup-$GUID
 ----
@@ -61,7 +61,7 @@ Now the Hub Backup feature is enabled and this step will install the necessary d
 === 3. Creating the storage location secret
 
 Create a file named `credentials-backup` for the backup storage location in the appropriate format for your provider, in our case, AWS.
-[source,bash]
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 cat <<EOF > ~/credentials-backup
 [default]
@@ -72,7 +72,7 @@ EOF
 
 Now let's create a secret with its content.
 
-[source,bash]
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 cd ~
 oc create secret generic cloud-credentials -n open-cluster-management-backup --from-file cloud=credentials-backup
@@ -82,7 +82,7 @@ oc create secret generic cloud-credentials -n open-cluster-management-backup --f
 
 Now, this will establish the connection between RHACM and the object storage.
 
-[source,bash]
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 cat <<EOF | oc apply -f -
 apiVersion: oadp.openshift.io/v1alpha1
@@ -146,7 +146,7 @@ As part of the items that are in compliance, we can find the installation of the
 
 With all of that being said and understood, let's proceed and set up a Backup schedule. Apply:
 
-[source, bash]
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: BackupSchedule

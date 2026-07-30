@@ -56,6 +56,17 @@ Administrator login credentials:
 | *Username:* | {openshift_cluster_admin_username}
 | *Password:* | {openshift_cluster_admin_password}
 |===
+
+Before we get started we need to increase the max amount of pods for OpenShift, This will allow us to perform further use cases down the line. 
+
+.Procedure
+. From the Fleet Management Console Click on the *+ sign* -> *Import YAML* tab.
++
+image::02-rhacm-yaml.png[link=self, window=blank, width=100%]
+
+. Next, paste the following YAML Click *Create*
++
+[source,bash,subs="+macros,+attributes",role=execute]
 ----
 apiVersion: machineconfiguration.openshift.io/v1
 kind: KubeletConfig

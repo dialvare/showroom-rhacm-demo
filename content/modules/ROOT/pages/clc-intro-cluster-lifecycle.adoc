@@ -34,15 +34,3 @@ Open Cluster Management is a sandbox CNCF project(currently going through the in
 image::https://raw.githubusercontent.com/open-cluster-management-io/OCM/main/assets/ocm-arch.png[OCM Hub-Spoke Architecture]
 
 Now, *let's get to work*! 
-
-Apply `rhacm.yaml`:
-
-[source,yaml,subs="+attributes"]
-----
-rhacm_demo:
-  hands_on:
-    - enabled: yes
-      mode: hard
-----
-
-Please, proceed to the next section. 🙂
