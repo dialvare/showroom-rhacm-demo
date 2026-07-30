@@ -37,16 +37,17 @@ The OpenShift Virtualization Operator can be deployed directly from the Operator
 
 . In the search field, type `OpenShift Virtualization` and select the *OpenShift Virtualization* tile.
 
++
 image::Install-operator-virt.png[link=self, window=blank, width=100%, Operator]
-
++
 . Click *Install* to open the Operator subscription form.
 
 . Leave the default settings:
-
++
 NOTE: The `openshift-cnv` namespace is created automatically by the Operator subscription. You do not need to create it beforehand.
-
++
 image::Install-operator-virt2.png[link=self, window=blank, width=100%, Operator Install]
-
++
 . Click *Install* and wait for the Operator status to show *Succeeded*. This may take a few minutes.
 
 == Creating the HyperConverged Custom Resource
@@ -56,13 +57,13 @@ Installing the Operator alone does not enable virtualization on the cluster. You
 .Procedure
 . Once the Operator installation is complete, you will see a prompt to *Create HyperConverged*. Click it.
 
++
 image::Install-Hyper.png[link=self, window=blank, width=100%, Install Hyper Converged]
-
 +
 . Accept the default configuration and click *Create*.
-
++
 image::Install-Hyper2.png[link=self, window=blank, width=100%, Install Hyper Create]
-
++
 . The deployment will take several minutes as the Operator rolls out the virtualization infrastructure pods. You can monitor progress by navigating to *Workloads* -> *Pods* in the `openshift-cnv` namespace.
 
 == Verifying the Installation
