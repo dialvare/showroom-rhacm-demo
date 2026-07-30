@@ -1,0 +1,95 @@
+[[deploy-virt-operator]]
+
+= Deploying the OpenShift Virtualization Operator
+
+:navtitle: Deploying the Operator
+
+== Introduction
+
+OpenShift Virtualization brings traditional virtual machine workloads into the same Kubernetes-native platform that already runs your containers. Instead of maintaining a separate hypervisor stack alongside OpenShift, you get a single control plane for both VMs and containerized applications—unified scheduling, networking, storage, and lifecycle management. This removes the operational overhead of context-switching between tools and reduces infrastructure sprawl.
+
+For organizations modernizing at their own pace, this is a critical capability. Legacy applications that cannot be containerized today still need to run reliably, and OpenShift Virtualization lets them coexist with cloud-native workloads on the same cluster. Combined with Red Hat Advanced Cluster Management, you gain fleet-wide visibility and policy-driven governance over your entire virtualization estate—across multiple clusters—from a single console.
+
+By the end of this exercise, you will:
+
+* Understand why OpenShift Virtualization is a foundational component for managing VMs at scale.
+* Deploy the OpenShift Virtualization Operator on a managed cluster using the RHACM console.
+* Verify that the Operator is installed and the `HyperConverged` custom resource is healthy.
+
+== Before You Begin
+
+Ensure you have completed the previous section and have at least one managed cluster available in your RHACM Hub. The Operator will be deployed on your managed cluster.
+
+Switch to the *OpenShift Console* tab in the right panel if you haven't already. Administrator login credentials:
+
+[cols="1,1"]
+|===
+| *Username:* | {openshift_cluster_admin_username}
+| *Password:* | {openshift_cluster_admin_password}
+|===
+
+== Installing the OpenShift Virtualization Operator
+
+The OpenShift Virtualization Operator can be deployed directly from the OperatorHub in the OpenShift Console. RHACM also supports deploying Operators across your fleet using policies—an approach covered in the Governance section—but here we will walk through the manual installation to understand what the Operator provisions.
+
+.Procedure
+. From the OpenShift Console on your managed cluster, navigate to *Ecosystem* -> *Software Catalog*.
+
+. In the search field, type `OpenShift Virtualization` and select the *OpenShift Virtualization* tile.
+
+image::Install-operator-virt.png[link=self, window=blank, width=100%, Operator]
+
+. Click *Install* to open the Operator subscription form.
+
+. Leave the default settings:
+
+NOTE: The `openshift-cnv` namespace is created automatically by the Operator subscription. You do not need to create it beforehand.
+
+image::Install-operator-virt2.png[link=self, window=blank, width=100%, Operator Install]
+
+. Click *Install* and wait for the Operator status to show *Succeeded*. This may take a few minutes.
+
+== Creating the HyperConverged Custom Resource
+
+Installing the Operator alone does not enable virtualization on the cluster. You must create a `HyperConverged` custom resource (CR) to deploy the underlying components—KubeVirt, CDI (Containerized Data Importer), and the networking/storage hooks that OpenShift Virtualization requires.
+
+.Procedure
+. Once the Operator installation is complete, you will see a prompt to *Create HyperConverged*. Click it.
+
+image::Install-Hyper.png[link=self, window=blank, width=100%, Install Hyper Converged]
+
++
+. Accept the default configuration and click *Create*.
+
+image::Install-Hyper2.png[link=self, window=blank, width=100%, Install Hyper Create]
+
+. The deployment will take several minutes as the Operator rolls out the virtualization infrastructure pods. You can monitor progress by navigating to *Workloads* -> *Pods* in the `openshift-cnv` namespace.
+
+== Verifying the Installation
+
+Once all pods are running, verify that the Operator is healthy.
+
+.Procedure
+. Navigate to *Operators* -> *Installed Operators* and confirm that *OpenShift Virtualization* shows a status of *Succeeded*.
+
+. You can also verify from the CLI by running the following command in the Bastion Host:
++
+[source,bash,subs="+macros,+attributes",role=execute]
+----
+oc get csv -n openshift-cnv
+----
++
+You should see the OpenShift Virtualization ClusterServiceVersion with a phase of `Succeeded`.
+
+. Confirm that the `HyperConverged` CR is healthy:
++
+[source,bash,subs="+macros,+attributes",role=execute]
+----
+oc get hyperconverged kubevirt-hyperconverged -n openshift-cnv -o jsonpath='{.status.conditions[?(@.type=="Available")].status}'
+----
++
+The expected output is `True`.
+
+IMPORTANT: If any component shows a degraded status, check the Operator pod logs in the `openshift-cnv` namespace before proceeding.
+
+With the OpenShift Virtualization Operator deployed and verified, your cluster is now ready to run virtual machine workloads. In the next section, you will use RHACM to create and manage VMs across your fleet.

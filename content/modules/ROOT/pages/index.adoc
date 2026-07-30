@@ -62,10 +62,7 @@ Before we get started we need to increase the max amount of pods for OpenShift, 
 .Procedure
 . From the Fleet Management Console Click on the *+ sign* -> *Import YAML* tab.
 +
-image::02-rhacm-yaml.png[link=self, window=blank, width=100%]
-
 . Next, paste the following YAML Click *Create*
-+
 [source,bash,subs="+macros,+attributes",role=execute]
 ----
 apiVersion: machineconfiguration.openshift.io/v1
@@ -80,6 +77,8 @@ spec:
     podsPerCore: 20 
     maxPods: 500
 ----
++
+image::02-rhacm-yaml.png[link=self, window=blank, width=100%]
 
 Secondly, to proceed successfully, make sure you have the following artifacts:
 

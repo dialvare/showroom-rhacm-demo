@@ -10,21 +10,25 @@
 * xref:clc-credentials.adoc[Creating credentials]
 * xref:clc-create-cluster-aws.adoc[Creating clusters on AWS]
 
-.2. Governance
+.2. Virtualization Lifecycle
+* xref:virt-deploy-operator.adoc[Deploying the Operator]
+* xref:virt-manage-virt.adoc[Managing your Virtual Infrastructure]
+
+.3. Governance
 * xref:gov-intro-governance.adoc[Introduction to Governance]
 * xref:gov-creating-policy.adoc[Creating Policies]
 * xref:gov-policy-generator.adoc[Policy Generator]
 
-.3. MultiCluster Observability
+.4. MultiCluster Observability
 * xref:obs-intro-observability.adoc[Introduction to Observability]
 * xref:obs-analyzing-dashs-metrics.adoc[Analyzing Dashboards and Metrics]
 * xref:obs-interactive-demos.adoc[Observability Interactive Demos]
 
-.4. Application Lifecycle 
+.5. Application Lifecycle 
 * xref:alc-intro-app-lifecycle.adoc[Introduction to Application Lifecycle]
 * xref:alc-integrating-gitops-rhacm.adoc[Integrating RHACM & OpenShift GitOps]
 * xref:alc-deploying-apps.adoc[Deploying and Managing MultiCluster Applications with GitOps]
 
-.5.Business Continuity
+.6.Business Continuity
 * xref:bc-intro-business-continuity.adoc[Introduction to Business Contitnuity]
 * xref:bc-acm-hub-backup-restore.adoc[Hub Backup and Restore]

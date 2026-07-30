@@ -1,0 +1,58 @@
+[[create-manage-vms]]
+
+== Create and Manage Virtual Machines Using the RHACM Console
+
+Red Hat Advanced Cluster Management (RHACM) with OpenShift Virtualization provides unified, policy-as-code driven control of clusters and VMs from a single console. It lets you label resources, enforce placement, and automate compliance—removing the need to jump between different management tools and ensuring consistent controls across all workloads.
+
+By the end of this exercise, you will:
+
+* Navigate the RHACM Search interface to locate Virtual Machine resources across the entire fleet.
+* Provision a new Virtual Machine using the RHACM Creation Wizard.
+* Perform Day 2 operations (Stop, Start, Migrate) directly from the multi-cluster view.
+
+=== Deploy Virtual Machines Using the RHACM Console
+
+.Procedure
+. Using the Hamburger menu, select *Fleet Virtualization*
++
+image::08-dropdown-menu.png[link=self, window=blank, width=100%, Create VM]
++
+. Click the *Create*
++
+image::09-create-menu.png[link=self, window=blank, width=100%, Create VM]
++
+. Select Custom Configuration (default) Enter a name for your VM — use *mynewvm* — and click *Next*
++
+image::10-template-menu.png[link=self, window=blank, width=100%, Create VM]
++
+. Select the *RHEL* and click *Guest Operating System Type* as *rhel.10* and click *Next* 
++
+image::10-template-menu2.png[link=self, window=blank, width=100%, Create VM]
++
+NOTE: Notice all of the available templates to use. Windows VMs are fully supported as well.
++
+. Under boot volume select *rhel10* and Click *next*
++
+image::10-template-menu3.png[link=self, window=blank, width=100%, Create VM]
++
+. On the Compute resources verify that *General Purpose* is selected and Click *Next Twitce*
+image::10-template-menu4.png[link=self, window=blank, width=100%, Create VM]
++
+. Verify all the settings and click *Create Virtual Machine*
+image::10-template-menu5.png[link=self, window=blank, width=100%, Create VM]
+
+[CAUTION]
+====
+Notice all of the available options to configure the VM with. These will change depending on your operating system.
+====
++
+. Watch for progress — this should take a couple of minutes to complete. Once completed you will see the live console as well as stats about your VM.
++
+image::12-vm-finish.png[link=self, window=blank, width=100%, Create VM]
+
+[TIP]
+====
+*UI or GitOps—The Choice is Yours!*
+
+While this lab demonstrates the graphical capabilities of the RHACM console, Virtual Machines in OpenShift are fundamentally Kubernetes objects. You can define your VMs as code using YAML and deploy them using Red Hat OpenShift GitOps (ArgoCD). RHACM supports both workflows: use the UI for quick administration and discovery, or use GitOps for a fully declarative, audit-ready production pipeline. In sovereign cloud environments, GitOps workflows provide version-controlled infrastructure that meets compliance requirements and audit trails for regulatory demonstrations.
+====
