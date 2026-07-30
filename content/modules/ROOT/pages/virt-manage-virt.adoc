@@ -25,27 +25,28 @@ image::09-create-menu.png[link=self, window=blank, width=100%, Create VM]
 +
 image::10-template-menu.png[link=self, window=blank, width=100%, Create VM]
 +
-. Select the *RHEL* and click *Guest Operating System Type* as *rhel.10* and click *Next* 
+. Select *RHEL* and set *Guest Operating System Type* to *rhel.10*, then click *Next*
 +
 image::10-template-menu2.png[link=self, window=blank, width=100%, Create VM]
 +
 NOTE: Notice all of the available templates to use. Windows VMs are fully supported as well.
 +
-. Under boot volume select *rhel10* and Click *next*
+. Under boot volume select *rhel10* and click *Next*
 +
 image::10-template-menu3.png[link=self, window=blank, width=100%, Create VM]
 +
-. On the Compute resources verify that *General Purpose* is selected and Click *Next Twitce*
+. On the Compute resources verify that *General Purpose* is selected and click *Next* twice
++
 image::10-template-menu4.png[link=self, window=blank, width=100%, Create VM]
 +
 . Verify all the settings and click *Create Virtual Machine*
++
 image::10-template-menu5.png[link=self, window=blank, width=100%, Create VM]
-
++
 [CAUTION]
 ====
 Notice all of the available options to configure the VM with. These will change depending on your operating system.
 ====
-+
 . Watch for progress — this should take a couple of minutes to complete. Once completed you will see the live console as well as stats about your VM.
 +
 image::12-vm-finish.png[link=self, window=blank, width=100%, Create VM]
