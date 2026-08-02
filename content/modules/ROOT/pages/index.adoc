@@ -32,6 +32,7 @@ After completing this lab, you will have gained comprehensive, hands-on experien
 * **Governance (GRC):** You will learn how to enforce security policies and ensure compliance across your entire fleet of clusters by creating and deploying policies within ACM, including the use of the Policy Generator.
 * **End-to-End Observability:** You will configure centralized visibility to monitor cluster health and perform quick root cause analysis. This includes setting up backend storage (S3 buckets) and integrating Grafana into ACM for a complete observability overview.
 * **Fleet Virtualization:** You will learn how to manage virtualization workloads from a single pane of glass using RHACM. This includes utilizing a centralized multi-cluster tree-view for enhanced visibility, creating new virtual machines across your clusters, and performing cross-cluster live migrations to simplify operations and reduce manual context switching.
+* **Business Continuity:** You will learn how to protect critical workloads and ensure service availability across your multi-cluster fleet using RHACM. This includes configuring disaster recovery strategies, setting up cluster failover and failback procedures, and leveraging backup and restore capabilities to minimize downtime and maintain operational resilience in the event of cluster or infrastructure failures.
 
 [[prerequisites]]
 == Prerequisites
@@ -41,7 +42,7 @@ Before beginning this lab, you should have:
 * Solid OpenShift administration experience
 * Familiarity with multi-cluster concepts
 
-We need to apply a configuration change to our cluster to increase the number of allowed pods, this is just to increase capacity for further execises down the line.
+We need to apply a configuration change to our cluster to increase the number of allowed pods, this is just to increase capacity for further exercises down the line.
 
 The Red Hat Advanced Cluster Management for Kubernetes (RHACM) Console is now integrated with OpenShift Console. To access it, select *Fleet Management* from the dropdown menu on the left once you log in.
 
@@ -62,7 +63,7 @@ Before we get started we need to increase the max amount of pods for OpenShift, 
 .Procedure
 . From the Fleet Management Console Click on the *+ sign* -> *Import YAML* tab.
 +
-. Next, paste the following YAML Click *Create*
+. Next, paste the following YAML and click *Create*
 [source,bash,subs="+macros,+attributes",role=execute]
 ----
 apiVersion: machineconfiguration.openshift.io/v1
@@ -78,11 +79,12 @@ spec:
     maxPods: 500
 ----
 +
+
 image::02-rhacm-yaml.png[link=self, window=blank, width=100%]
 
 Secondly, to proceed successfully, make sure you have the following artifacts:
 
-- A SSH keys (public and private).
+- SSH keys (public and private).
 - An OpenShift pull-secret.
 
 NOTE: if you don't have these handy, don't sweat -- Either the demo instructions will help you get one or your facilitator can get you one too.
