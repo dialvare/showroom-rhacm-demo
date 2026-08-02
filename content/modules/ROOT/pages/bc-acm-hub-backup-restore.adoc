@@ -37,7 +37,7 @@ One more time, we will be using a AWS S3 Storage bucket for storing the hub back
 
 [source,bash,subs="+macros,+attributes",role=execute]
 ----
-aws s3api create-bucket --bucket acm-backup-$GUID
+aws s3api create-bucket --bucket acm-backup-$GUID --create-bucket-configuration LocationConstraint=us-east-2
 ----
 
 IMPORTANT: Make note of your bucket name.
@@ -79,6 +79,8 @@ oc create secret generic cloud-credentials -n open-cluster-management-backup --f
 ----
  
 === 4. Create the DataProtectionApplication
+
+NOTE: This step might fail if Step 2 has not fully completed yet. Enabling the cluster-backup flag triggers the installation of the OADP operator, which may take a few minutes. If you encounter an error, wait for the OADP operator to finish installing and try again.
 
 Now, this will establish the connection between RHACM and the object storage.
 
@@ -178,8 +180,23 @@ In your lab, you might have received credentials to log in to the AWS Console. T
 
 image::bc-s3-aws.png[S3 page in AWS]
 
-And with that, we finish our lab!
-If you have come so far, congratulations!
+== Lab Complete!
 
-We hope you enjoyed!
+Congratulations on completing the Red Hat Advanced Cluster Management demo lab! Throughout this hands-on experience, you have explored the full breadth of RHACM's capabilities across its five major use cases:
+
+* **Cluster Lifecycle Management:** You provisioned and managed OpenShift clusters in AWS, including Standalone, Single Node OpenShift (SNO), and Hosted Control Plane clusters. You learned how to create cloud provider credentials, deploy clusters, and manage their lifecycle from a single console.
+
+* **Application Lifecycle Management via GitOps:** You integrated Argo CD with RHACM and used a GitOps-driven approach to deploy and manage applications across multiple clusters. You experienced firsthand how a push-based model from a centralized hub can simplify multi-cluster application delivery.
+
+* **Governance, Risk, and Compliance (GRC):** You created and enforced policies across your fleet to ensure security and compliance. You worked with both manually created policies and the Policy Generator to automate governance at scale.
+
+* **End-to-End Observability:** You configured centralized monitoring by setting up S3-backed storage and integrating Grafana dashboards into RHACM. You gained visibility into cluster health, resource utilization, and learned how to perform root cause analysis across your fleet.
+
+* **Fleet Virtualization:** You deployed and managed virtual machines across multiple clusters from a single pane of glass. You explored the multi-cluster tree-view for enhanced visibility and performed cross-cluster live migrations.
+
+* **Business Continuity:** You explored Disaster Recovery strategies including Regional-DR and Metro-DR for applications, and deployed the Backup and Restore operator to protect the RHACM Hub itself. You configured automated backup schedules and validated that your hub cluster data is safely stored and recoverable.
+
+Together, these capabilities demonstrate how Red Hat Advanced Cluster Management provides a unified platform for managing, securing, and protecting your entire Kubernetes fleet -- from day one provisioning to ongoing operations and disaster recovery.
+
+We hope you enjoyed the lab! For further learning, revisit the xref:index.adoc#Related-links[Related Links] section for documentation, support matrices, and additional resources.
 

@@ -78,7 +78,6 @@ spec:
     podsPerCore: 20 
     maxPods: 500
 ----
-+
 
 image::02-rhacm-yaml.png[link=self, window=blank, width=100%]
 

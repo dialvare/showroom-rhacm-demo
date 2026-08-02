@@ -1,6 +1,6 @@
 [[deploy-virt-operator]]
 
-= Deploying the OpenShift Virtualization Operator
+= Installing the OpenShift Virtualization Operator
 
 :navtitle: Deploying the Operator
 
