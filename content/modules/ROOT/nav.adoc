@@ -11,7 +11,7 @@
 * xref:clc-create-cluster-aws.adoc[Creating clusters on AWS]
 
 .2. Virtualization Lifecycle
-* xref:virt-deploy-operator.adoc[Installing the Operator]
+* xref:virt-deploy-operator.adoc[Getting started with Virtualization]
 * xref:virt-manage-virt.adoc[Managing your Virtual Infrastructure]
 
 .3. Governance
