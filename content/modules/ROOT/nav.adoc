@@ -29,6 +29,6 @@
 * xref:alc-integrating-gitops-rhacm.adoc[Integrating RHACM & OpenShift GitOps]
 * xref:alc-deploying-apps.adoc[Deploying and Managing MultiCluster Applications with GitOps]
 
-.6.Business Continuity
+.6. Business Continuity
 * xref:bc-intro-business-continuity.adoc[Introduction to Business Contitnuity]
 * xref:bc-acm-hub-backup-restore.adoc[Hub Backup and Restore]

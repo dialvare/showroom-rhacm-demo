@@ -1,34 +1,40 @@
-= Showroom Template
+= RHACM Demo
 
-A template for creating Red Hat Showroom lab guides and demo content, built with https://antora.org[Antora].
+This repository contains the Showroom content for the Red Hat Advanced Cluster Management for Kubernetes (RHACM) demo available through the Red Hat Demo Platform.
 
-* 0% cruft
-* Red Hat Demo Platform UI Bundle default
-* Dev Mode extension that displays the asciidoc attributes you have to work with
+_Contents:_
 
-== Documentation
+- *Cluster Lifecycle Management:* Provision and manage clusters from a centralized hub.
+- *Virtualization Lifecycle:* Manage virtual machines and virtualization workloads across clusters.
+- *Governance:* Apply policies consistently across managed clusters and monitor configuration drift/compliance.
+- *Multicluster Observability:* Centralize monitoring, metrics, alerts, and insights across clusters.
+- *Application Lifecycle Management:* Deploy and manage applications across multiple clusters.
+- *Business Continuity:* Demonstrate disaster recovery and resilience across clusters.
 
-Full documentation — getting started, content structure, configuration, local development, and AI-assisted content creation — is available at:
+## Demo Overview
 
-https://rhpds.github.io/showroom_template_nookbag/
+The RHACM demo showcases how Red Hat Advanced Cluster Management provides a centralized
+management plane for OpenShift clusters and workloads across hybrid cloud environments.
 
-== Quick Start
+The demo walks through the main capabilities of RHACM, from cluster provisioning and
+governance to application management, observability, virtualization, and business continuity.
 
-. https://github.com/rhpds/showroom_template_nookbag/generate[Create a repo from this template] (suggested naming: `<lab-name>-showroom`)
-. Clone your new repo and preview locally:
-+
-[source,sh]
-----
-podman run --rm --name antora -v $PWD:/antora -p 8080:8080 -i -t ghcr.io/juliaaano/antora-viewer
-----
-+
-On SELinux systems, append `:z` to the volume mount.
+## Red Hat Demo Platform
 
-. Edit content in `content/modules/ROOT/pages/`
-. See the https://rhpds.github.io/showroom_template_nookbag/modules/content-repo.html[Content Repository] docs for directory layout, Podman Compose with live reload, dev mode, and more.
+This content is delivered through the Red Hat Demo Platform (RHDP) using Red Hat Showroom.
 
-== Create Content with AI
+The published demo is available at:
 
-The https://github.com/rhpds/rhdp-skills-marketplace[RHDP Skills Marketplace] provides skills for Cursor IDE and Claude Code that generate labs, demos, and validate content against Red Hat standards.
+https://catalog.demo.redhat.com/catalog/all?search=acm&item=babylon-catalog-prod%2Fpublished.ocp4-acm-demo.prod[RHACM Demo]
 
-See the https://rhpds.github.io/showroom_template_nookbag/modules/content-repo.html#_creating_content_with_ai_tools[AI Tools documentation] for details.
+## Repository Structure
+
+```text
+.
+├── content/          # Showroom demo content
+├── examples/         # Example configurations and content
+├── site.yml          # Antora site configuration
+├── ui-config.yml     # Showroom UI configuration
+└── README.adoc       # Repository documentation
+
+
