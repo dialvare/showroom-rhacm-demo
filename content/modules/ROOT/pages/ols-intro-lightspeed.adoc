@@ -21,7 +21,7 @@ NOTE: The MCP Server for Red Hat Advanced Cluster Management is currently a Tech
 
 In the architecture diagram below you can find all the components involved:
 
-**IMAGE_HERE**
+image::ols-arch.png[OpenShift Lightspeed and ACM's MCP architecture]
 
 === How it works
 
