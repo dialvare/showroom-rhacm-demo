@@ -3,23 +3,25 @@
 
 This section walks you through deploying the RHACM Search MCP Server on your hub cluster and configuring OpenShift Lightspeed to use it for fleet-wide natural language queries.
 
+The OpenShift Lightspeed Operator is installed and connected to a large language model (LLM) provider on your hub cluster. During the following module you will use OpenShift Lightspeed to query about resources deployed in previous sections. Ensure you have at least one managed cluster available and have completed the previous modules. Otherewise you will need to addapt some queries to other resources already deployed in your environment.
+
 At the end of this section, you'll have:
 
 * Deployed the Search MCP Server on the hub cluster using Helm.
-* Updated the `OLSConfig` custom resource to register the MCP server.
-* Tested natural language queries against your managed clusters.
-
-== Before You Begin
-
-Ensure you have completed the previous sections and have at least one managed cluster available. The OpenShift Lightspeed Operator should already be installed and connected to a large language model (LLM) provider on your hub cluster.
-
-Switch to the *Bastion Host* terminal tab in the right panel.
+* Updated the `OLSConfig` custom resource to register the MCP server and disable human-in-the-loop approvals.
 
 == Deploying the MCP Server
 
 The MCP server can be deployed on your hub cluster using Helm. The Helm chart creates the necessary resources including the deployment, service, service account, and RBAC roles required to interact with the RHACM Search API.
 
-.Procedure
+. Switch to the *Bastion Host* terminal tab in the right panel.
+. Helm is not pre-installed on the bastion machine, so let's install it first:
++
+[source,bash,subs="+macros,+attributes",role=execute]
+----
+curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+----
++
 . Add the Helm chart repository and install the MCP server:
 +
 [source,bash,subs="+macros,+attributes",role=execute]
@@ -33,27 +35,19 @@ helm install acm-mcp-server acm-search/acm-mcp-server --create-namespace --names
 +
 [source,bash,subs="+macros,+attributes",role=execute]
 ----
-oc get pods -n acm-search
+watch oc get pods -n acm-search
 ----
-+
-You should see the `acm-mcp-server` pod with a status of `Running`.
 
-. Confirm the service is available:
-+
-[source,bash,subs="+macros,+attributes",role=execute]
-----
-oc get svc -n acm-search
-----
+Wait until you see the `acm-mcp-server` pod with a status of `Running`.
 
 == Configuring OpenShift Lightspeed
 
-With the MCP server deployed, you now need to register it in the OpenShift Lightspeed configuration so the assistant knows how to reach it.
+With the MCP server deployed, you now need to register it in the OpenShift Lightspeed configuration so the assistant knows how to reach it. The OpenShift Lightspeed configuration is deplared in the OLSConfig CR resource already deployed in your hub cluster. This is the resource we will modify to allow users to query resources across its fleet.
 
 === Updating the OLSConfig Custom Resource
 
-Apply the following patch to your `OLSConfig` custom resource to register the MCP server and enable the feature gate.
+Apply the following patch to your `OLSConfig` custom resource to enable the MCPServer feature gate and register ACM's MCP server. For more information, see the https://docs.redhat.com/en/documentation/red_hat_openshift_lightspeed/1.0tp1/html/about_openshift_lightspeed/index[OpenShift Lightspeed documentation on enabling a custom MCP server].
 
-.Procedure
 . Run the following command from the Bastion Host:
 +
 [source,bash,subs="+macros,+attributes",role=execute]
@@ -86,16 +80,12 @@ This configuration does three things:
 * *featureGates*: Enables the `MCPServer` feature gate, which allows OpenShift Lightspeed to connect to external MCP servers.
 * *mcpServers*: Registers the MCP server endpoint. The `url` points to the in-cluster service deployed in the previous step.
 * *headers*: Uses `type: kubernetes` for the authorization header. This instructs OpenShift Lightspeed to automatically use the service account token for internal cluster authentication.
-+
-For more information, see the https://docs.redhat.com/en/documentation/red_hat_openshift_lightspeed/1.0tp1/html/about_openshift_lightspeed/index[OpenShift Lightspeed documentation on enabling a custom MCP server].
 
 === Bypassing Human-in-the-Loop Approval for Read-Only Queries
 
 OpenShift Lightspeed includes human-in-the-loop approvals as a security guardrail, ensuring administrators review and confirm AI actions before any cluster state changes occur.
 
-However, the RHACM Search MCP Server is *inherently read-only* -- it only queries, filters, and retrieves resource data. It cannot modify your cluster state. Requiring manual approval for every search query would introduce unnecessary latency and interrupt the conversational flow of your troubleshooting sessions.
-
-To streamline the experience, apply the following configuration:
+However, the RHACM Search MCP Server is *inherently read-only*. It only queries, filters, and retrieves resource data, but cannot modify your cluster state. Requiring manual approval for every search query would introduce unnecessary latency and interrupt the conversational flow of your troubleshooting sessions. To streamline the experience, apply the following configuration:
 
 [source,bash,subs="+macros,+attributes",role=execute]
 ----
@@ -120,69 +110,11 @@ With this in place, search queries will execute immediately without requiring ma
 +
 [source,bash,subs="+macros,+attributes",role=execute]
 ----
-oc get pods -n openshift-lightspeed
+watch oc get pods -n openshift-lightspeed
 ----
-+
-All pods should show a status of `Running`. If they are still restarting, wait a moment and check again.
+
+Wait untill all pods show a status of `Running`. If they are still restarting, wait a moment and check again.
 
 == Querying Your Fleet with Natural Language
 
-With everything configured, it's time to put OpenShift Lightspeed to work. Switch to the *OpenShift Console* tab in the right panel and open the *Lightspeed* chat panel by clicking the Lightspeed icon in the top navigation bar.
-
-=== Query 1: Cluster Version Overview
-
-Start with a straightforward question to verify the integration is working:
-
-[quote]
-Which managed clusters are running an older version of OpenShift than 4.18?
-
-OpenShift Lightspeed will analyze the clusters managed by RHACM. Notice how the model may combine different tools to build its answer: the built-in `resources_get` tool for hub cluster resources (like `ManagedCluster` and `ManagedClusterInfo` custom resources), and the Search MCP `find_resources` tool for fleet-wide queries. This first query is a good reminder that OpenShift Lightspeed works in RHACM the same way it does in a standard OpenShift cluster.
-
-=== Query 2: Resources in a Specific Managed Cluster
-
-Now, let's put the MCP server through a realistic multicluster scenario. Ask about specific resources in one of your managed clusters:
-
-[quote]
-Show me the information of all the pods running in the open-cluster-management-agent namespace in my managed cluster
-
-This query targets a specific namespace in a specific cluster. You can expand the `find_resources` tool invocation at the end of the response to see the raw data returned by the MCP server, including the arguments used during the tool call (cluster name and namespace).
-
-=== Query 3: Fleet-Wide Troubleshooting
-
-Finally, test a fleet-wide diagnostic query -- this is where the real power of the integration shines:
-
-[quote]
-Are there any unhealthy pods across all my managed clusters? If so, show me the pod details and briefly explain how to fix it
-
-Instead of logging into each cluster individually and running `oc get pods` with filters, OpenShift Lightspeed queries the entire fleet in one shot and returns an actionable diagnosis. By surfacing issues across clusters instantly, operators can significantly reduce mean time to detect (MTTD) and address problems before end users are affected.
-
-TIP: You can ask follow-up questions to drill deeper into any result. For example: _"What events are associated with that pod?"_ or _"Show me the details of that deployment."_
-
-Feel free to explore other queries. Here are a few ideas to get you started:
-
-* _"List all deployments with fewer ready replicas than desired across my fleet"_
-* _"Which namespaces have resource quotas close to their limits?"_
-* _"Show me all services of type LoadBalancer across all clusters"_
-* _"Are there any unhealthy VMs in my fleet of managed clusters?"_
-
-== Interactive Demo
-
-++++
-<!--ARCADE EMBED START-->
-<div style="position: relative; padding-bottom: calc(48.3854% + 41px); height: 0px; width: 100%;">
-  <iframe
-    src="https://demo.arcade.software/nie2JQJkPNzkIRB7IX8t?embed&embed_mobile=tab&embed_desktop=inline&show_copy_link=true"
-    title="Introduction to SearchMCP"
-    frameborder="0"
-    loading="lazy"
-    webkitallowfullscreen
-    mozallowfullscreen
-    allowfullscreen
-    allow="clipboard-write; autoplay"
-    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; color-scheme: light;"
-  ></iframe>
-</div>
-<!--ARCADE EMBED END-->
-++++
-
-With OpenShift Lightspeed connected to your RHACM Search deployment, you now have an AI-powered interface to query, analyze, and diagnose resources across your entire fleet using natural language. In the next section, we'll cover Business Continuity -- protecting your critical workloads and ensuring service availability across your multi-cluster fleet.
+With everything configured, it's time to put OpenShift Lightspeed to work. 

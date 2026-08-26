@@ -5,9 +5,9 @@ In the previous section, you used GitOps to deploy and manage applications acros
 
 As the number of managed clusters grows, so does the cognitive load on platform engineers. Constructing manual search queries and sifting through scattered cluster outputs to answer fleet-wide questions can be time-consuming, especially during critical incidents. What if you could ask your fleet a question in natural language and get an immediate answer?
 
-This is where *OpenShift Lightspeed* and the *MCP Server for Red Hat Advanced Cluster Management* come in.
+This is where OpenShift Lightspeed and the MCP Server for Red Hat Advanced Cluster Management come in.
 
-NOTE: The https://modelcontextprotocol.io/[Model Context Protocol (MCP)] is an open standard that bridges AI models and external data sources. It allows an AI assistant to discover and interact with tools exposed by external services, without requiring custom integrations for each one.
+NOTE: The Model Context Protocol (MCP) is an open standard that bridges AI models and external data sources. It allows an AI assistant to discover and interact with tools exposed by external services, without requiring custom integrations for each one.
 
 This module will walk you through the OpenShift Lightspeed integration with RHACM. At the end of this module, you'll have deployed the MCP Server for Red Hat Advanced Cluster Management, connected it to your OpenShift Lightspeed instance and used natural language to query resources across your managed clusters.
 
@@ -17,9 +17,9 @@ OpenShift Lightspeed is Red Hat's AI-powered assistant built into the OpenShift 
 
 However, in a multicluster environment managed by RHACM, administrators often need to query resources running across their entire fleet, not just the hub cluster. This is where the MCP Server for Red Hat Advanced Cluster Management extends OpenShift Lightspeed's reach. This MCP server provides a single tool (_find_resources_) that provides access to the ACM Search database. The MCP server translates natural language prompts into structured search queries against the RHACM Search API, enabling OpenShift Lightspeed to query resources across all your managed clusters from a single chat interface.
 
-NOTE: The RHACM Search MCP Server is currently a *Technology Preview* feature. For more information, refer to the https://github.com/stolostron/search-mcp-server[MCP server repository].
+NOTE: The MCP Server for Red Hat Advanced Cluster Management is currently a Technology Preview feature. For more information, refer to the https://github.com/stolostron/search-mcp-server[MCP server repository].
 
-In the architecture diagram you can find all the components involved:
+In the architecture diagram below you can find all the components involved:
 
 **IMAGE_HERE**
 
@@ -35,4 +35,4 @@ Here's the flow when you ask a fleet-wide question:
 
 With this flow, the entire fleet becomes queryable through a single conversational interface.
 
-In the next section, you will deploy the MCP server on your hub cluster and configure OpenShift Lightspeed to start makeing use of it.
+In the next section, you will deploy the MCP server on your hub cluster and configure OpenShift Lightspeed to start making use of it.
