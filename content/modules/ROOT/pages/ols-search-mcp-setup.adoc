@@ -40,7 +40,7 @@ Wait until you see the `acm-mcp-server` pod with a status of `Running`.
 
 == Configuring OpenShift Lightspeed
 
-With the MCP server deployed, you now need to register it in the OpenShift Lightspeed configuration so the assistant knows how to reach it. The OpenShift Lightspeed configuration is declared in the OLSConfig CR resource already deployed in your hub cluster. This is the resource we will modify to allow users to query resources across the fleet.
+With the MCP server deployed, you now need to register it in the OpenShift Lightspeed configuration so the assistant knows how to reach it. The OpenShift Lightspeed configuration is declared in the `OLSConfig` CR already deployed in your hub cluster. This is the resource we will modify to allow users to query resources across the fleet.
 
 === Updating the OLSConfig Custom Resource
 

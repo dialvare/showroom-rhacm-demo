@@ -13,16 +13,18 @@ Switch to the *Fleet management* console and open the *OpenShift Lightspeed* cha
 
 image::ols-icon.png[OpenShift Lightspeed icon, width=80]
 
-=== Asking About RHACM Processes
+=== Query 1: Asking About RHACM Processes
 
 OpenShift Lightspeed has access to Red Hat product documentation, which means it can answer questions about RHACM concepts and workflows apart from cluster resources. Try asking:
 
 [quote]
-How do I create a RHACM Policy?
+How do I create a RHACM Policy to enforce a namespace quota across all my managed clusters?
 
 OpenShift Lightspeed will provide a step-by-step explanation of how to create a policy in RHACM along with respective YAMLs. This is useful for quickly getting ACM guidance without leaving the console.
 
-=== Querying Hub Cluster Resources
+image::ols-response1.png[OpenShift Lightspeed response query 1]
+
+=== Query 2: Querying Hub Cluster Resources
 
 Now let's confirm that the OpenShift Lightspeed built-in MCP server is working. Ask the following question:
 
@@ -31,7 +33,7 @@ List the pods in the openshift-lightspeed namespace
 
 OpenShift Lightspeed uses its built-in MCP server (likely the `pods_list_in_namespace` tool) to query the resources directly from the hub cluster, where it is installed. This is the same behavior you'd see in any standalone OpenShift cluster. No ACM MCP server needed for this one.
 
-=== Analyzing Cluster Resources via Attachments
+=== Query 3: Analyzing Cluster Resources via Attachments
 
 OpenShift Lightspeed also supports attaching YAML resources directly to your query. This is useful when you want to ask questions about a specific resource without the LLM having to look it up.
 
@@ -39,11 +41,13 @@ Let's try this with one of your managed clusters.
 
 . In the RHACM console, navigate to *Infrastructure* -> *Clusters* and select *cluster2-sno*.
 . In the OpenShift Lightspeed chat panel, locate the Plus *+* button and select *Attach cluster info*.
-. Verify both the ManagedCluster and ManagedClusterInfo CRs are attached. 
+. Verify both the `ManagedCluster` and `ManagedClusterInfo` CRs are attached. 
 . With both resources loaded, ask:
 
 [quote]
 What are the labels of the nodes of this cluster?
+
+image::ols-attachments.png[ACM resources attachments]
 
 OpenShift Lightspeed will analyze the attached YAMLs and extract the node label information from the cluster resources. It will likely show you the labels for each of the three control plane nodes in the cluster. 
 
@@ -55,7 +59,7 @@ Now that we've confirmed OpenShift Lightspeed works as expected on the RHACM con
 
 With the ACM's MCP server connected, OpenShift Lightspeed can now reach beyond the hub cluster and query resources running across all your managed clusters.
 
-Make sure you clear the current conversation in OpenShift Lightspeed by clicking on *Clear chat* (paperbin icon). This will delete all previous context and start a newly fresh conversation.
+Make sure you clear the current conversation in OpenShift Lightspeed by clicking on *Clear chat* (paperbin icon). This will delete all previous context and start a fresh conversation.
 
 === Query 1: Cluster Version Overview
 
@@ -64,7 +68,7 @@ Start with a straightforward question to verify the integration is working:
 [quote]
 What OpenShift version is each managed cluster running?
 
-OpenShift Lightspeed will analyze the clusters managed by RHACM. Notice how the model may combine different tools to build its answer: ACM's MCP server `find_resources` tool for fleet-wide queries and the built-in `resources_get` tool for hub cluster resources (like `ManagedCluster` and `ManagedClusterInfo` custom resources). You can click on the `find_resources` tool to check the information collected from our fleet:
+OpenShift Lightspeed will analyze the clusters managed by RHACM. Notice how the model may combine different tools to build its answer: the ACM MCP server's `find_resources` tool for fleet-wide queries and the built-in `resources_get` tool for hub cluster resources (like _ManagedCluster_ and _ManagedClusterInfo_ custom resources). You can click on the `find_resources` tool to check the information collected from our fleet:
 
 image::ols-tool.png[Information returned by the find_resources tool]
 
@@ -73,9 +77,9 @@ image::ols-tool.png[Information returned by the find_resources tool]
 Now, let's put the MCP server through a realistic multicluster scenario. Ask about specific resources in one of your managed clusters:
 
 [quote]
-Show me the pods running in the rocketchat namespace across my managed clusters
+Show me the pods running in the rocketchat namespace in my cluster1 managed cluster
 
-This query targets the RocketChat application you deployed with ArgoCD in the previous section in the cluster1 production namespace. Again OpenShift Lightspeed will make use of the ACM MCP server to find the information. You can expand the `find_resources` tool invocation at the end of the response to see the raw data returned, including the arguments used during the tool call (namespace and cluster).
+This query targets the RocketChat application you deployed with ArgoCD in the previous section in the cluster1 production namespace. Once again, OpenShift Lightspeed uses the ACM MCP server to find the information. You can expand the `find_resources` tool invocation at the end of the response to see the raw data returned, including the arguments used during the tool call (namespace and cluster).
 
 === Query 3: Fleet-Wide Observability
 
@@ -84,11 +88,13 @@ Finally, test a fleet-wide diagnostic query -- this is where the real power of t
 [quote]
 What's the status of the virtual machines deployed across all my managed clusters? Show me additional information
 
-Instead of logging into each cluster individually and running `oc get vms`, OpenShift Lightspeed queries the entire fleet in one shot and returns the information requested. This allows easily noticing issues across clusters instantly, significantly reduce mean time to detect (MTTD) and allowing address problems before end users are affected.
+Instead of logging into each cluster individually and running `oc get vms`, OpenShift Lightspeed queries the entire fleet in one shot and returns the information requested. This makes it easy to spot issues across clusters instantly, significantly reducing mean time to detect (MTTD) and allowing operators to address problems before end users are affected.
 
-TIP: You can complement the operation by using the Search engine available in ACM to see more information about resources queried like yaml configuration, related resources, etc.
+TIP: You can complement this by using the Search engine in ACM to see more details about the queried resources, such as YAML configuration, related resources, etc.
 
 == Interactive Demo
+
+Want to know more? Check out the Interactive Demo below:
 
 ++++
 <!--ARCADE EMBED START-->
