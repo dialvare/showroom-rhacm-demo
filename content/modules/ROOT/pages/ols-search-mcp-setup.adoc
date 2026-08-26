@@ -76,7 +76,7 @@ oc patch olsconfig cluster --type=merge -p '
 ----
 
 This configuration does three things:
-+
+
 * *featureGates*: Enables the `MCPServer` feature gate, which allows OpenShift Lightspeed to connect to external MCP servers.
 * *mcpServers*: Registers the MCP server endpoint. The `url` points to the in-cluster service deployed in the previous step.
 * *headers*: Uses `type: kubernetes` for the authorization header. This instructs OpenShift Lightspeed to automatically use the service account token for internal cluster authentication.
@@ -88,7 +88,7 @@ OpenShift Lightspeed includes human-in-the-loop approvals as a security guardrai
 However, the RHACM Search MCP Server is inherently read-only. It only queries, filters, and retrieves resource data, but cannot modify your cluster state. Requiring manual approval for every search query would introduce unnecessary latency and interrupt the conversational flow of your troubleshooting sessions. To streamline the experience, apply the following configuration:
 
 Patch the OLSConfig to disable manual approval:
-+
+
 [source,bash,subs="+macros,+attributes",role=execute]
 ----
 oc patch olsconfig cluster --type=merge -p '
