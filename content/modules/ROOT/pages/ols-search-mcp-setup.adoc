@@ -14,7 +14,7 @@ At the end of this section, you'll have:
 
 The MCP server can be deployed on your hub cluster using Helm. The Helm chart creates the necessary resources including the deployment, service, service account, and RBAC roles required to interact with the RHACM Search API.
 
-. Switch to the *Bastion Host* terminal tab in the right panel.
+. Switch to the Bastion Host terminal tab in the right panel.
 . Helm is not pre-installed on the bastion machine, so let's install it first:
 +
 [source,bash,subs="+macros,+attributes",role=execute]
@@ -46,10 +46,10 @@ With the MCP server deployed, you now need to register it in the OpenShift Light
 
 === Updating the OLSConfig Custom Resource
 
-Apply the following patch to your `OLSConfig` custom resource to enable the MCPServer feature gate and register ACM's MCP server. For more information, see the https://docs.redhat.com/en/documentation/red_hat_openshift_lightspeed/1.0tp1/html/about_openshift_lightspeed/index[OpenShift Lightspeed documentation on enabling a custom MCP server].
+Apply the following patch to your `OLSConfig` custom resource to enable the MCPServer feature gate and register ACM's MCP server. For more information, see the OpenShift Lightspeed documentation on https://docs.redhat.com/en/documentation/red_hat_openshift_lightspeed/1.0tp1/html/about_openshift_lightspeed/index[enabling a custom MCP server].
 
-. Run the following command from the Bastion Host:
-+
+Run the following command from the Bastion Host:
+
 [source,bash,subs="+macros,+attributes",role=execute]
 ----
 oc patch olsconfig cluster --type=merge -p '
@@ -74,7 +74,7 @@ oc patch olsconfig cluster --type=merge -p '
   }
 }'
 ----
-+
+
 This configuration does three things:
 +
 * *featureGates*: Enables the `MCPServer` feature gate, which allows OpenShift Lightspeed to connect to external MCP servers.
@@ -85,8 +85,10 @@ This configuration does three things:
 
 OpenShift Lightspeed includes human-in-the-loop approvals as a security guardrail, ensuring administrators review and confirm AI actions before any cluster state changes occur.
 
-However, the RHACM Search MCP Server is *inherently read-only*. It only queries, filters, and retrieves resource data, but cannot modify your cluster state. Requiring manual approval for every search query would introduce unnecessary latency and interrupt the conversational flow of your troubleshooting sessions. To streamline the experience, apply the following configuration:
+However, the RHACM Search MCP Server is inherently read-only. It only queries, filters, and retrieves resource data, but cannot modify your cluster state. Requiring manual approval for every search query would introduce unnecessary latency and interrupt the conversational flow of your troubleshooting sessions. To streamline the experience, apply the following configuration:
 
+Patch the OLSConfig to disable manual approval:
++
 [source,bash,subs="+macros,+attributes",role=execute]
 ----
 oc patch olsconfig cluster --type=merge -p '
@@ -102,19 +104,13 @@ oc patch olsconfig cluster --type=merge -p '
 }'
 ----
 
-With this in place, search queries will execute immediately without requiring manual approval.
+Finally, verify that the OpenShift Lightspeed pods have restarted with the new configuration:
 
-=== Verifying the Configuration
-
-. Verify that the OpenShift Lightspeed pods have restarted with the new configuration:
-+
 [source,bash,subs="+macros,+attributes",role=execute]
 ----
 watch oc get pods -n openshift-lightspeed
 ----
 
 Wait untill all pods show a status of `Running`. If they are still restarting, wait a moment and check again.
-
-== Querying Your Fleet with Natural Language
 
 With everything configured, it's time to put OpenShift Lightspeed to work. 
