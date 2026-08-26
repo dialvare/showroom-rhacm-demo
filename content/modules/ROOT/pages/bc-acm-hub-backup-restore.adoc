@@ -194,7 +194,7 @@ Congratulations on completing the Red Hat Advanced Cluster Management demo lab! 
 
 * **Fleet Virtualization:** You deployed and managed virtual machines across multiple clusters from a single pane of glass. You explored the multi-cluster tree-view for enhanced visibility and performed cross-cluster live migrations.
 
-* **AI-Powered Fleet Management with OpenShift Lightspeed:** You deployed the RHACM Search MCP Server and configured OpenShift Lightspeed to query resources across your entire fleet using natural language. You experienced how AI-powered multicluster management can reduce troubleshooting time and simplify fleet-wide operations.
+* **AI-Powered Fleet Management with OpenShift Lightspeed:** You deployed the MCP server for Red Hat Advanced Cluster Management and configured OpenShift Lightspeed to query resources across your entire fleet using natural language. You experienced how AI-powered multicluster management can reduce troubleshooting time and simplify fleet-wide operations.
 
 * **Business Continuity:** You explored Disaster Recovery strategies including Regional-DR and Metro-DR for applications, and deployed the Backup and Restore operator to protect the RHACM Hub itself. You configured automated backup schedules and validated that your hub cluster data is safely stored and recoverable.
 

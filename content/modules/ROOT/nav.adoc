@@ -31,7 +31,7 @@
 
 .6. OpenShift Lightspeed
 * xref:ols-intro-lightspeed.adoc[Introduction to OpenShift Lightspeed]
-* xref:ols-search-mcp-setup.adoc[Deploying the Search MCP Server]
+* xref:ols-search-mcp-setup.adoc[Deploying the MCP Server for ACM]
 * xref:ols-querying-fleet.adoc[Querying Your Fleet]
 
 .7. Business Continuity
