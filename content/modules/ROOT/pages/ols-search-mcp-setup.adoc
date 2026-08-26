@@ -74,6 +74,7 @@ oc patch olsconfig cluster --type=merge -p '
 ----
 
 This configuration does three things:
+
 * *featureGates*: Enables the `MCPServer` feature gate, which allows OpenShift Lightspeed to connect to external MCP servers.
 * *mcpServers*: Registers the MCP server endpoint. The `url` points to the in-cluster service deployed in the previous step.
 * *headers*: Uses `type: kubernetes` for the authorization header. This instructs OpenShift Lightspeed to automatically use the service account token for internal cluster authentication.
